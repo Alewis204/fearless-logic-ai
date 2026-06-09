@@ -1,18 +1,39 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Eye, EyeOff, Zap } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
+import { Eye, EyeOff, Zap, Loader2 } from 'lucide-react';
 
 export default function Signup() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement signup logic
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong');
+        return;
+      }
+      router.push('/login?success=true');
+    } catch {
+      setError('Connection error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,7 +69,6 @@ export default function Signup() {
       {/* Right - Form */}
       <div className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="w-full max-w-[440px]">
-          {/* Logo */}
           <Link href="/" className="mb-10 flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy">
               <Zap className="h-4 w-4 text-gold" />
@@ -60,6 +80,12 @@ export default function Signup() {
           <p className="mt-2 text-sm text-darkgray/70">
             No credit card required. Start your 14-day free trial.
           </p>
+
+          {error && (
+            <div className="mt-4 rounded-lg border border-error/30 bg-error/5 p-3 text-sm text-error">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
@@ -134,8 +160,13 @@ export default function Signup() {
               </label>
             </div>
 
-            <button type="submit" className="btn-cta w-full justify-center">
-              Start Free Trial
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-cta flex w-full items-center justify-center gap-2"
+            >
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+              {loading ? 'Creating your account...' : 'Start Free Trial'}
             </button>
           </form>
 
