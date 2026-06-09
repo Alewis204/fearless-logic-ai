@@ -1,6 +1,7 @@
+"use client";
 import { useState } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export default function HeroSection() {
   const [idea, setIdea] = useState('');
@@ -49,7 +50,7 @@ export default function HeroSection() {
                 />
               </div>
               <Link
-                to="/signup"
+                href="/signup"
                 className="btn-cta h-12 shrink-0 text-base"
               >
                 Start Free Trial

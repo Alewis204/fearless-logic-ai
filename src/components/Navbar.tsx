@@ -1,12 +1,14 @@
+"use client";
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Zap } from 'lucide-react';
 import { navLinks } from '../data/siteData';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const isHome = location.pathname === '/';
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
   const scrollToSection = (href: string) => {
     if (href.startsWith('/#')) {
@@ -28,7 +30,7 @@ export default function Navbar() {
       <div className="container-page">
         <div className="flex h-16 items-center justify-between lg:h-[64px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy">
               <Zap className="h-4 w-4 text-gold" />
             </div>
@@ -51,7 +53,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   className="btn-ghost text-sm font-medium"
                 >
                   {link.label}
@@ -62,10 +64,10 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 md:flex">
-            <Link to="/login" className="btn-ghost text-sm font-medium">
+            <Link href="/login" className="btn-ghost text-sm font-medium">
               Log in
             </Link>
-            <Link to="/signup" className="btn-cta btn-sm">
+            <Link href="/signup" className="btn-cta btn-sm">
               Start Free Trial →
             </Link>
           </div>
@@ -97,7 +99,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   onClick={() => setIsOpen(false)}
                   className="block rounded-lg px-4 py-2.5 text-sm font-medium text-darkgray hover:bg-offwhite"
                 >
@@ -107,14 +109,14 @@ export default function Navbar() {
             ))}
             <hr className="my-3 border-lightgray" />
             <Link
-              to="/login"
+              href="/login"
               className="block rounded-lg px-4 py-2.5 text-sm font-medium text-darkgray hover:bg-offwhite"
               onClick={() => setIsOpen(false)}
             >
               Log in
             </Link>
             <Link
-              to="/signup"
+              href="/signup"
               className="btn-cta w-full justify-center"
               onClick={() => setIsOpen(false)}
             >

@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export default function CTASection() {
   return (
@@ -14,14 +14,14 @@ export default function CTASection() {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              to="/signup"
+              href="/signup"
               className="btn-cta btn-lg text-base"
             >
               Start Your Free Trial
               <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
-              to="/pricing"
+              href="/pricing"
               className="btn-lg inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/20 px-8 py-4 text-base font-semibold text-white transition-all duration-200 hover:bg-white/10"
             >
               View Pricing

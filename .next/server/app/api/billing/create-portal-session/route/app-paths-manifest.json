@@ -1,0 +1,3 @@
+{
+  "/api/billing/create-portal-session/route": "app/api/billing/create-portal-session/route.js"
+}

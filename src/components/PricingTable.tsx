@@ -1,6 +1,7 @@
+"use client";
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { pricingPlans } from '../data/siteData';
 
 export default function PricingTable() {
@@ -86,7 +87,7 @@ export default function PricingTable() {
               </ul>
 
               <Link
-                to={plan.ctaLink}
+                href={plan.ctaLink}
                 className={`mt-8 flex w-full items-center justify-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-200 ${
                   plan.popular
                     ? 'btn-cta'

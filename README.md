@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Fearless Logic AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fearless Logic AI is an all-in-one AI-powered platform that lets entrepreneurs build websites, apps, and funnels without coding.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. Environment Setup
 
-## React Compiler
+Copy the example environment file and fill in your credentials:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env.local
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You will need:
+- **Supabase**: URL and service role key for database access.
+- **NextAuth**: Secret and provider credentials (Google/GitHub).
+- **Stripe**: API keys and Price IDs for billing.
+- **OpenAI**: API key for the blueprint generation engine.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 2. Database Migrations
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Apply the database migrations to your Supabase instance:
+
+```bash
+# Using Supabase CLI
+supabase db push
 ```
+
+Alternatively, run the SQL in `/supabase/migrations` manually in the Supabase SQL Editor.
+
+### 3. Development Server
+
+Install dependencies and run the development server:
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Database**: PostgreSQL (Supabase)
+- **Auth**: NextAuth.js
+- **Payments**: Stripe
+- **AI**: OpenAI GPT-4
+- **Styling**: Tailwind CSS v4
+
+## Deployment
+
+This project is optimized for deployment on **Vercel**.
+
+1. Connect your repository to Vercel.
+2. Add all environment variables from `.env.example`.
+3. Deploy!

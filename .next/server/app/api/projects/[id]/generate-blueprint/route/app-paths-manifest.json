@@ -1,0 +1,3 @@
+{
+  "/api/projects/[id]/generate-blueprint/route": "app/api/projects/[id]/generate-blueprint/route.js"
+}
