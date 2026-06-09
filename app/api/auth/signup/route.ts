@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     if (userError) {
       return NextResponse.json(
-        { error: "Failed to create account. Please try again." },
+        { error: "User error: " + userError.message },
         { status: 500 }
       );
     }
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     ]);
     if (pwError) {
       return NextResponse.json(
-        { error: "Failed to create account. Please try again." },
+        { error: "PW error: " + pwError.message },
         { status: 500 }
       );
     }
