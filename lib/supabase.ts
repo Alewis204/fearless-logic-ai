@@ -2,11 +2,10 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 function createSupabaseClient() {
   if (!supabaseUrl || !supabaseAnonKey) {
-    // Return a mock client when env vars aren't configured
-    // This allows the build to work without Supabase credentials
     return {
       from: () => ({
         select: () => Promise.resolve({ data: null, error: null }),
@@ -28,4 +27,14 @@ function createSupabaseClient() {
   return createClient(supabaseUrl, supabaseAnonKey);
 }
 
+function createAdminClient() {
+  if (!supabaseUrl || !supabaseServiceKey) {
+    return createSupabaseClient();
+  }
+  return createClient(supabaseUrl, supabaseServiceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
 export const supabase = createSupabaseClient();
+export const supabaseAdmin = createAdminClient();

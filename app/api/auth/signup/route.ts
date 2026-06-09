@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin as supabase } from "@/lib/supabase";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     if (userError) {
       return NextResponse.json(
-        { error: "Failed to create user: " + userError.message },
+        { error: "Failed to create account. Please try again." },
         { status: 500 }
       );
     }
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     ]);
     if (pwError) {
       return NextResponse.json(
-        { error: "Password error: " + pwError.message },
+        { error: "Failed to create account. Please try again." },
         { status: 500 }
       );
     }
