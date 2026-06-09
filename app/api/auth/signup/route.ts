@@ -45,17 +45,22 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (userError) {
-      console.error("Failed to create user:", userError);
       return NextResponse.json(
-        { error: "Failed to create account. Please try again." },
+        { error: "Failed to create user: " + userError.message },
         { status: 500 }
       );
     }
 
     // Store password
-    await supabase.from("passwords").insert([
+    const { error: pwError } = await supabase.from("passwords").insert([
       { user_id: user.id, hash: hashedPassword },
     ]);
+    if (pwError) {
+      return NextResponse.json(
+        { error: "Password error: " + pwError.message },
+        { status: 500 }
+      );
+    }
 
     // Create free subscription
     const trialEnd = new Date();
